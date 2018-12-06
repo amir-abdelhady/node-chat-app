@@ -18,15 +18,22 @@ io.on('connection', (socket) => {
     //     createAt: 123
     // })
 
-    socket.emit('newMessage', {
-        from: 'Andrew',
-        text: 'Where are you?',
-        createAt: 12345
-    })
+    // socket.emit('newMessage', {
+    //     from: 'Andrew',
+    //     text: 'Where are you?',
+    //     createAt: 12345
+    // })
 
     socket.on('createEmail', (newEmail) => console.log('createEmail', newEmail))
 
-    socket.on('createMessage', (newMessage) => console.log('createMessage', newMessage))
+    socket.on('createMessage', (newMessage) => {
+        console.log('createMessage', newMessage)
+        io.emit('createMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+          })
+    })
 
     socket.on('disconnect', () => {
         console.log('User was disconnected')
@@ -36,4 +43,5 @@ io.on('connection', (socket) => {
 app.use(express.static(publicPath))
 
 server.listen(port, () => console.log(`Listening on port: ${port}`))
+
 
