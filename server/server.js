@@ -1,4 +1,4 @@
-const {generateMessage} = require('./utils/message')
+const {generateMessage, generateLocationMessage} = require('./utils/message')
 
 const path = require('path')
 const http = require('http')
@@ -22,11 +22,10 @@ io.on('connection', (socket) => {
         console.log('createMessage', message)
         io.emit('createMessage', generateMessage(message.from, message.text))
         callback('This is from the server.')
-        // socket.broadcast.emit('newMessage', {
-        //     from: Message.from,
-        //     text: Message.text,
-        //     createdAt: new Date().getTime
-        // })
+    })
+
+    socket.on('createLocationMessage', (coords) => {
+        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude))
     })
 
     socket.on('disconnect', () => {
