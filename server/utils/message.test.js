@@ -22,6 +22,6 @@ describe('generateLocationMessage', () => {
     let location = generateLocationMessage(from, latitude, longitutde)
 
     expect(location.createdAt).toBeA('number')
-    expect(location).toi
+    expect(location).toInclude({from, url})
   })
 })
