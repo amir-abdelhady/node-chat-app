@@ -32,7 +32,13 @@ socket.on('disconnect', function () {
 });
 
 socket.on('updateUserList', function (users) {
-  console.log('User list', users)
+  let ol = jQuery('<ol></ol>')
+
+  users.forEach(function (User) {
+    ol.append(jQuery('<li></li>').text(user))
+  });
+
+  jQuery('#users').html(ol)
 })
 
 socket.on('newMessage', function (message) {
